@@ -24,6 +24,8 @@ Amount	Transaction amount
 Class	Target variable (1 = Fraud, 0 = Legitimate)
 🏗️ System Architecture
 text
+<img width="354" height="407" alt="image" src="https://github.com/user-attachments/assets/7ca16d0a-e998-4691-acdc-87daff15abd3" />
+
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                           CREDIT CARD FRAUD DETECTION SYSTEM                │
 ├─────────────────────────────────────────────────────────────────────────────┤
