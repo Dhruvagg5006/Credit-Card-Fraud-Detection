@@ -28,31 +28,31 @@ text
 │                           CREDIT CARD FRAUD DETECTION SYSTEM                │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐                 │
-│  │   Data Load  │───▶│   EDA &      │───▶│  Data Split  │                 │
-│  │   (CSV)      │    │   Cleaning   │    │  (Train/Test)│                 │
-│  └──────────────┘    └──────────────┘    └──────────────┘                 │
-│         │                   │                   │                         │
-│         ▼                   ▼                   ▼                         │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐                 │
-│  │ Feature      │    │ Correlation  │    │  Standard    │                 │
-│  │ Analysis     │    │  Heatmap     │    │  Scaling     │                 │
-│  └──────────────┘    └──────────────┘    └──────────────┘                 │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐                   │
+│  │   Data Load  │───▶│   EDA &      │───▶│  Data Split  │                  │
+│  │   (CSV)      │    │   Cleaning   │    │  (Train/Test)│                   │
+│  └──────────────┘    └──────────────┘    └──────────────┘                   │
+│         │                   │                   │                           │
+│         ▼                   ▼                   ▼                           │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐                   │
+│  │ Feature      │    │ Correlation  │    │  Standard    │                   │
+│  │ Analysis     │    │  Heatmap     │    │  Scaling     │                   │
+│  └──────────────┘    └──────────────┘    └──────────────┘                   │
 │                                                   │                         │
 │                                                   ▼                         │
-│  ┌────────────────────────────────────────────────────────────────────┐    │
-│  │                        MODEL TRAINING                              │    │
-│  ├────────────┬────────────┬────────────┬────────────────────────────┤    │
-│  │ Logistic   │  Random    │  Decision  │         XGBoost            │    │
-│  │ Regression │  Forest    │    Tree    │     (Selected Best)        │    │
-│  └────────────┴────────────┴────────────┴────────────────────────────┘    │
+│  ┌────────────────────────────────────────────────────────────────────┐     │
+│  │                        MODEL TRAINING                              │     │
+│  ├────────────┬────────────┬────────────┬────────────────────────────┤      │
+│  │ Logistic   │  Random    │  Decision  │         XGBoost            │      │
+│  │ Regression │  Forest    │    Tree    │     (Selected Best)        │      │
+│  └────────────┴────────────┴────────────┴────────────────────────────┘      │
 │                                                   │                         │
 │                                                   ▼                         │
-│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐                 │
-│  │  Model       │    │  FastAPI     │    │  Frontend    │                 │
-│  │  Export      │───▶│  Backend     │───▶│  (HTML/CSS/  │                 │
-│  │  (.pkl)      │    │  Service     │    │   JS)        │                 │
-│  └──────────────┘    └──────────────┘    └──────────────┘                 │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐                   │
+│  │  Model       │    │  FastAPI     │    │  Frontend    │                   │
+│  │  Export      │───▶│  Backend     │───▶│  (HTML/CSS/  │                  │
+│  │  (.pkl)      │    │  Service     │    │   JS)        │                   │
+│  └──────────────┘    └──────────────┘    └──────────────┘                   │
 │                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
 🔄 Data Flow Diagram
@@ -116,12 +116,12 @@ text
                     └────────┬────────┘
                              │
                              ▼
-┌─────────────┐      ┌─────────────────┐      ┌─────────────┐
-│  User Input │─────▶│  POST /predict  │─────▶│  JSON       │
-│  (Features) │      │  Endpoint       │      │  Response   │
-└─────────────┘      └─────────────────┘      │  - fraud    │
-                                               │  - prob     │
-                                               └─────────────┘
+┌─────────────┐      ┌─────────────────┐       ┌─────────────┐
+│  User Input │─────▶│  POST /predict  │─────▶│  JSON      |
+│  (Features) │      │  Endpoint       │       │  Response  |
+└─────────────┘      └─────────────────┘       │  - fraud   |
+                                               │  - prob    │
+                                               └────────────┘
 🧠 Model Performance Comparison
 Model	Accuracy	Precision	Recall	F1-Score	MCC
 Logistic Regression	0.9991	0.8462	0.5612	0.6748	0.6887
@@ -221,6 +221,9 @@ json
     "fraud": 1,
     "probability": "0.87"
 }
+
+
+
 📁 Project Structure
 text
 credit-card-fraud-detection/
@@ -235,6 +238,10 @@ credit-card-fraud-detection/
 └── assets/                    # (Optional) Images for README
     ├── architecture.png
     └── confusion_matrix.png
+
+
+
+    
 🖥️ Usage
 Via Web Interface
 Open frontend.html in your browser
