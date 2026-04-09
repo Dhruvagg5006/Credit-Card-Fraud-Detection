@@ -1,230 +1,98 @@
-# Credit-Card-Fraud-Detection-
+A complete end-to-end machine learning pipeline designed to detect fraudulent credit card transactions in real-time. This project features a robust XGBoost model to handle extreme data imbalance and a FastAPI backend for seamless deployment.
 
-📌 Project Overview
-This project implements a machine learning-based fraud detection system for credit card transactions. Using the publicly available Kaggle Credit Card Fraud Detection dataset, the system identifies potentially fraudulent transactions with high accuracy. The project includes data preprocessing, exploratory data analysis, model training (Logistic Regression, Random Forest, Decision Tree, and XGBoost), and a complete web application for real-time fraud prediction.
+📋 Table of Contents
+Project Overview
 
-📊 Dataset
-Source: Kaggle Credit Card Fraud Detection Dataset
+Dataset Information
 
-Dataset Statistics:
+System Architecture
 
-Total Transactions: 284,807
+Model Performance
 
-Fraudulent Transactions: 492 (0.17%)
+Installation & Setup
 
-Legitimate Transactions: 284,315 (99.83%)
+Project Structure
 
-Features: 31 columns (Time, V1-V28, Amount, Class)
+🎯 Project Overview
+Financial fraud costs billions annually. This system leverages advanced analytics to identify suspicious patterns. By utilizing an XGBoost classifier, the model focuses on Recall to ensure as many fraud cases as possible are captured without overwhelming the system with false positives.
 
-Features Description:
-Feature	Description
-Time	Seconds elapsed between this transaction and the first transaction
-V1 - V28	Principal components obtained with PCA (anonymized for privacy)
-Amount	Transaction amount
-Class	Target variable (1 = Fraud, 0 = Legitimate)
+Key Features:
 
+Real-time API: POST endpoints for instant transaction scoring.
 
-🧠 Model Performance Comparison
-Model	Accuracy	Precision	Recall	F1-Score	MCC
-Logistic Regression	0.9991	0.8462	0.5612	0.6748	0.6887
-Random Forest	0.9995	0.9737	0.7551	0.8506	0.8573
-Decision Tree	0.9995	0.9737	0.7551	0.8506	0.8573
-XGBoost	0.9994	0.8495	0.8061	0.8272	0.8272
-Why XGBoost was chosen as the final model:
-Highest Recall (80.61%) - Better at catching actual fraud cases
+Modern UI: An interactive HTML frontend to test transactions manually.
 
-Handles Imbalanced Data - Built-in scale_pos_weight parameter
+Imbalance Handling: Optimized using scale_pos_weight and stratified sampling.
 
-Regularization - Prevents overfitting on minority class
+📊 Dataset Information
+The dataset is sourced from Kaggle.
 
-Feature Importance - Provides interpretability
+Anonymized Features: Features V1-V28 are PCA-transformed components for privacy.
 
-Speed - Efficient training and inference
+Class Imbalance: Only 0.17% of transactions are fraudulent (492 out of 284,807).
 
-📈 Evaluation Metrics Explained
-Metric	Description	Formula
-Accuracy	Overall correctness	(TP + TN) / (TP + TN + FP + FN)
-Precision	Accuracy of positive predictions	TP / (TP + FP)
-Recall	Ability to find all positives	TP / (TP + FN)
-F1-Score	Harmonic mean of precision & recall	2 * (Precision * Recall) / (Precision + Recall)
-MCC	Balanced measure for imbalanced data	(TP×TN - FP×FN) / √((TP+FP)(TP+FN)(TN+FP)(TN+FN))
-Where: TP = True Positive, TN = True Negative, FP = False Positive, FN = False Negative
+Preprocessing: Applied standard scaling to the Time and Amount features.
 
-💻 Technology Stack
-Backend
-FastAPI - High-performance web framework
+🏗️ System Architecture
+Code snippet
+graph TD
+    A[User Input / frontend.html] -->|JSON POST| B[FastAPI Backend / main.py]
+    B -->|Preprocess Data| C[XGBoost Model / .pkl]
+    C -->|Prediction| B
+    B -->|JSON Response| A
+🔄 Data Flow
+Raw Input: Transaction data is fed through the frontend or API.
 
-Python 3.9+ - Core programming language
+Standardization: Features are normalized to match the training distribution.
 
-XGBoost - Gradient boosting framework
+Inference: The pre-trained XGBoost model calculates the fraud probability.
 
-scikit-learn - ML utilities and preprocessing
+Output: The system returns a binary classification (Fraud/Safe) and a confidence score.
 
-pandas/numpy - Data manipulation
+🧠 Model Performance
+Given the high imbalance, accuracy is not our primary metric. We focus on the Confusion Matrix and F1-Score.
 
-joblib - Model serialization
-
-Frontend
-HTML5/CSS3 - Structure and styling
-
-JavaScript - Client-side interactivity
-
-Lucide Icons - Icon library
-
-Development Tools
-Jupyter Notebook - Exploratory analysis
-
-Uvicorn - ASGI server
-
-Git/GitHub - Version control
-
-🚀 Installation & Setup
-Prerequisites
-bash
-Python 3.9 or higher
-pip package manager
-Step 1: Clone the Repository
-bash
-git clone https://github.com/yourusername/credit-card-fraud-detection.git
-cd credit-card-fraud-detection
-Step 2: Install Dependencies
-bash
-pip install -r requirements.txt
-Step 3: Download Dataset
-Download the dataset from Kaggle and place creditcard.csv in the project root.
-
-Step 4: Train the Model (Optional)
-Run the Jupyter notebook Code.ipynb to train models and generate xgboost_fraud_model.pkl.
-
-Step 5: Start the API Server
-bash
-uvicorn main:app --reload
-Server runs at: http://127.0.0.1:8000
-
-Step 6: Launch Frontend
-Open frontend.html in a web browser or serve it using:
-
-bash
-python -m http.server 8080
-📡 API Endpoints
-POST /predict
-Predicts whether a transaction is fraudulent.
-
-Request Body:
-
-json
-{
-    "features": [406.0, -2.3122, 1.9519, -1.6098, 3.9979, ...]
-}
-Response:
-
-json
-{
-    "fraud": 1,
-    "probability": "0.87"
-}
-
-
-
+Metric	Score
+Accuracy	99.94%
+Recall (Fraud)	81.0%
+Precision (Fraud)	85.0%
+F1-Score	0.83
 📁 Project Structure
-text
-credit-card-fraud-detection/
-│
-├── Code.ipynb                 # Jupyter notebook with full analysis & training
-├── main.py                    # FastAPI backend server
-├── frontend.html              # Web interface
-├── xgboost_fraud_model.pkl    # Trained XGBoost model
-├── requirements.txt           # Python dependencies
-├── README.md                  # Project documentation
-│
-└── assets/                    # (Optional) Images for README
-    ├── architecture.png
-    └── confusion_matrix.png
+File	Description
+Code.ipynb	Comprehensive Notebook for EDA and Model Training.
+main.py	FastAPI application serving the inference logic.
+frontend.html	Client-side interface for user interaction.
+xgboost_fraud_model.pkl	Serialized XGBoost model for production use.
+requirements.txt	List of dependencies (XGBoost, FastAPI, etc.).
+🚀 Installation & Setup
+Clone the repository:
 
+Bash
+git clone https://github.com/your-username/credit-card-fraud.git
+cd credit-card-fraud
+Install requirements:
 
+Bash
+pip install -r requirements.txt
+Launch the backend server:
 
-    
-🖥️ Usage
-Via Web Interface
-Open frontend.html in your browser
-
-Enter transaction features (Time, Amount, V1-V28)
-
-Click "RUN ANALYSIS"
-
-View prediction result (Fraud Alert / Transaction Safe)
-
-Via API (cURL)
-bash
-curl -X POST http://127.0.0.1:8000/predict \
-  -H "Content-Type: application/json" \
-  -d '{"features": [406.0, -2.3122, 1.9519, -1.6098, 3.9979, ...]}'
-⚠️ Handling Class Imbalance
-The dataset is highly imbalanced (0.17% fraud). The following techniques were applied:
-
-scale_pos_weight parameter in XGBoost:
-
-text
-scale_pos_weight = len(y_train[y_train==0]) / len(y_train[y_train==1])
-scale_pos_weight = 577.29
-Precision-Recall focused metrics - F1-Score and MCC used instead of accuracy alone
-
-Stratified train-test split - Maintains class distribution
-
-🔍 Confusion Matrix Results (XGBoost)
-text
-              Predicted
-              Normal  Fraud
-Actual Normal   56858      5
-        Fraud      38    158
-True Negatives: 56,858
-
-False Positives: 5
-
-False Negatives: 38
-
-True Positives: 158
-
-🚧 Future Improvements
-Add real-time transaction streaming support
-
-Implement additional models (Neural Networks, LightGBM)
-
-Add user authentication and transaction history
-
-Deploy to cloud (AWS/GCP/Azure)
-
-Add SMS/Email alerts for fraud detection
-
-Implement SHAP values for model interpretability
+Bash
+uvicorn main:app --reload
+Open the frontend:
+Simply open frontend.html in your preferred web browser to begin testing.
 
 🤝 Contributing
-Contributions are welcome! Please follow these steps:
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
 
-Fork the repository
+Fork the Project
 
-Create a feature branch (git checkout -b feature/amazing-feature)
+Create your Feature Branch (git checkout -b feature/AmazingFeature)
 
-Commit changes (git commit -m 'Add amazing feature')
+Commit your Changes (git commit -m 'Add some AmazingFeature')
 
-Push to branch (git push origin feature/amazing-feature)
+Push to the Branch (git push origin feature/AmazingFeature)
 
 Open a Pull Request
 
-📝 License
-This project is open-source and available under the MIT License.
-
-📧 Contact
-For questions or suggestions, please open an issue on GitHub.
-
-🙏 Acknowledgments
-Kaggle for providing the dataset
-
-ULB Machine Learning Group for data collection
-
-XGBoost developers for the excellent library
-
-FastAPI community for the great framework
-
-⭐ Star this repository if you found it useful!
-
+📜 License
+Distributed under the MIT License. See LICENSE for more information.
